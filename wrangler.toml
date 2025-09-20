@@ -1,0 +1,9 @@
+name = "hello-world-api"
+compatibility_date = "2023-12-01"
+
+[env.production]
+compatibility_date = "2023-12-01"
+
+[[env.production.route]]
+pattern = "*"
+zone_id = ""

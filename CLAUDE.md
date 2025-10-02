@@ -106,8 +106,13 @@ curl http://localhost:3000/api/time
 **Build Settings**:
 - Framework preset: Next.js
 - Build command: `npm run build`
-- Build output: `.next`
-- No static export - full Next.js app with API routes
+- Build output: `out`
+- Static export with Cloudflare Functions for API
+
+**API Routes**:
+- Located in `functions/api/` directory
+- Uses Cloudflare Functions (not Next.js API routes)
+- Accessible at `/api/*` paths
 
 **wrangler.toml**:
 - Configured for Cloudflare Pages deployment
@@ -127,16 +132,18 @@ All APIs follow this structure:
 ### Common Issues & Solutions
 
 **API Routes Not Working**:
-- Check that `output: 'export'` is NOT in next.config.js
-- Ensure route files are named `route.ts` not `api.ts`
+- Cloudflare Functions are in `functions/api/` directory
+- Make sure functions use `export async function onRequest(context)`
+- API routes accessible at `/api/*` paths
 
 **Dark Mode Not Applying**:
 - Verify ThemeProvider wraps the app in layout.tsx
 - Check `suppressHydrationWarning` on html element
 
 **Cloudflare Build Fails**:
-- Use `.next` as output directory, not `out`
-- Don't use static export configuration
+- Use `out` as output directory for static export
+- Ensure `output: 'export'` is in next.config.js
+- API functions must be in `functions/` directory
 
 ## Template Customization Guide
 

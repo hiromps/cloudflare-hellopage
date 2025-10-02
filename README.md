@@ -1,22 +1,24 @@
 # Cloudflare Pages Next.js Template
 
-A modern, production-ready template for Next.js applications deployed on Cloudflare Pages with API routes, shadcn/ui components, and dark mode support.
+A modern, production-ready template for Next.js static sites with Cloudflare Functions API, shadcn/ui components, and dark mode support.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-38B2AC)
 ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-purple)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-Pages-orange)
+![Cloudflare Pages](https://img.shields.io/badge/Cloudflare-Pages-orange)
+![Cloudflare Functions](https://img.shields.io/badge/Cloudflare-Functions-orange)
 
 ## 🚀 Features
 
-- **Next.js 14** with App Router and API Routes
-- **shadcn/ui** components pre-configured
-- **Dark/Light mode** toggle with system preference detection
+- **Next.js 14** with App Router (Static Export)
+- **Cloudflare Functions** for serverless API endpoints
+- **shadcn/ui** components pre-configured (New York style)
+- **Dark/Light mode** toggle with next-themes
 - **Tailwind CSS** with beautiful gradients and glassmorphism
 - **TypeScript** support
 - **Cloudflare Pages** optimized configuration
-- **Sample API endpoints** to get started quickly
+- **Edge Runtime** API with global distribution
 - **Responsive design** with mobile-first approach
 - **Real-time updates** demonstration
 
@@ -55,22 +57,28 @@ Open [http://localhost:3000](http://localhost:3000) to see your application.
 ```
 cloudflare-hellopage/
 ├── app/
-│   ├── api/          # API routes
+│   ├── api/          # Next.js API routes (for local dev)
 │   │   ├── hello/
 │   │   ├── users/
 │   │   └── time/
 │   ├── globals.css   # Global styles and theme
 │   ├── layout.tsx    # Root layout with theme provider
 │   └── page.tsx      # Main page with UI components
+├── functions/        # Cloudflare Functions
+│   └── api/
+│       ├── hello.js  # Hello API endpoint
+│       ├── users.js  # Users management API
+│       └── time.js   # Server time API
 ├── components/
 │   ├── ui/           # shadcn/ui components
 │   └── theme-provider.tsx
 ├── lib/
 │   └── utils.ts      # Utility functions
 ├── public/           # Static assets
+├── out/              # Build output (after npm run build)
 ├── .env.example      # Environment variables template
 ├── components.json   # shadcn/ui configuration
-├── next.config.js    # Next.js configuration
+├── next.config.js    # Next.js configuration (static export)
 ├── tailwind.config.ts # Tailwind configuration
 ├── tsconfig.json     # TypeScript configuration
 └── wrangler.toml     # Cloudflare configuration
@@ -100,11 +108,13 @@ npx shadcn@latest add dialog
 
 ### API Endpoints
 
-Sample endpoints included:
+Cloudflare Functions endpoints (production):
 
 - `GET /api/hello` - Welcome message
 - `GET/POST /api/users` - User management
-- `GET /api/time` - Server time
+- `GET /api/time` - Server time with timezone
+
+**Note**: API endpoints are powered by Cloudflare Functions in production and Next.js API routes in local development.
 
 ## 🚀 Deployment
 
@@ -119,7 +129,7 @@ Sample endpoints included:
 4. Configure build settings:
    - **Framework preset**: Next.js
    - **Build command**: `npm run build`
-   - **Build output directory**: `.next`
+   - **Build output directory**: `out`
 
 5. Deploy!
 
@@ -156,15 +166,25 @@ export async function GET() {
 
 ## 📝 Important Notes
 
+### Architecture
+
+This template uses a **hybrid approach**:
+- **Frontend**: Static site export from Next.js (`output: 'export'`)
+- **Backend**: Cloudflare Functions for API endpoints
+- **Local Dev**: Next.js API routes for development convenience
+
 ### API Routes Configuration
 
-⚠️ **Never add `output: 'export'` to next.config.js** - This will disable API routes!
+- **Production**: Cloudflare Functions in `functions/api/` directory
+- **Development**: Next.js API routes in `app/api/` directory
+- Both use the same API structure for consistency
 
 ### Cloudflare Compatibility
 
-- Uses `.next` build output (not `out`)
+- Uses `out` build output for static export
 - Configured with `trailingSlash: true`
 - Images optimized for static delivery
+- API handled by Cloudflare Functions at edge
 
 ## 🤝 Contributing
 
@@ -187,6 +207,16 @@ Built with:
 - [shadcn/ui](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Cloudflare Pages](https://pages.cloudflare.com/)
+
+## 🏗️ Technology Stack
+
+- **Frontend Framework**: Next.js 14 (App Router, Static Export)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Theme**: next-themes (Dark/Light mode)
+- **Language**: TypeScript
+- **Deployment**: Cloudflare Pages
+- **API**: Cloudflare Functions (Edge Runtime)
+- **Package Manager**: npm
 
 ---
 
